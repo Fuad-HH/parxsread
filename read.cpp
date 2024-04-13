@@ -13,19 +13,19 @@
 int main(int argc, char* argv[])
 {
   // initialize MPI
-  MPI_Init(&argc, &argv);
+  //MPI_Init(&argc, &argv);
 
   // check the number of arguments
   if (argc != 2) {
     std::cerr << "Usage: " << argv[0] << " filename" << std::endl;
     return 1;
   }
-
+/*
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   int mpi_size;
   MPI_Comm_size(MPI_COMM_WORLD, &mpi_size);
-
+*/
 
   // get the filename string from the first argument
   std::string filename = argv[1];
@@ -44,10 +44,10 @@ int main(int argc, char* argv[])
   std::string wfilename2 = "test2.BIN";
   acefile2.save_binary(wfilename2);
   std::cout << "HDF5 file is saved as binary." << std::endl;
-
+/*
   // finalize MPI
   MPI_Finalize();
-
+*/
   
   return 0;
 }
