@@ -1,0 +1,5 @@
+build/
+*.TXT
+*.BIN
+*.h5
+*.vscode
