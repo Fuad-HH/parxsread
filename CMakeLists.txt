@@ -6,30 +6,16 @@ include(FetchContent)
 
 option(PARXSREAD_USE_MPI "Compile Abeille with MPI for distributed memory parallelism" ON)
 
-#===============================================================================
-# Get HighFive
-message(STATUS "Downloading HighFive")
-set(HIGHFIVE_USE_BOOST OFF)
-set(HIGHFIVE_EXAMPLES OFF)
-set(HIGHFIVE_BUILD_DOCS OFF)
-set(HIGHFIVE_STATIC_HDF5 ON)
-set(HighFive_FIND_QUIETLY ON)
-FetchContent_Declare(HighFive
-  GIT_REPOSITORY https://github.com/BlueBrain/HighFive.git
-  GIT_TAG        master
-)
-FetchContent_MakeAvailable(HighFive)
-
-#===============================================================================
-
 # get papillon on the system
 find_package(PapillonNDL REQUIRED)
+find_package(ADIOS2 REQUIRED)
+find_package(HighFive REQUIRED)
 
 # get the source files: only one source file read.cpp
 add_executable(parxsread read.cpp)
 
 # link the libraries: Papillon and HighFive
-target_link_libraries(parxsread PUBLIC PapillonNDL::PapillonNDL HighFive)
+target_link_libraries(parxsread PRIVATE PapillonNDL::PapillonNDL HighFive::HighFive adios2::cxx11_mpi MPI::MPI_C)
 
 # Find MPI if desired
 if(PARXSREAD_USE_MPI)
