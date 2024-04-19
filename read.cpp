@@ -12,8 +12,8 @@
 #include <sstream>
 #include "PapillonNDL/ace.hpp"
 
-void adios2readxsdir(const std::string& filename);
-void hdf5readxsdir(const std::string& filename);
+void ace2adios2(const std::string& filename);
+void ace2hdf5(const std::string& filename);
 std::vector<std::string> splitString(const std::string& str);
 
 
@@ -43,15 +43,15 @@ int main(int argc, char* argv[])
 
 
 
-  adios2readxsdir("/lore/hasanm4/nuclearData/Lib80x/xsdir");
-  //hdf5readxsdir("/lore/hasanm4/nuclearData/Lib80x/xsdir");
+  ace2adios2("/lore/hasanm4/nuclearData/Lib80x/xsdir");
+  //ace2hdf5("/lore/hasanm4/nuclearData/Lib80x/xsdir");
   
   return 0;
 }
 
 
 
-void adios2readxsdir(const std::string &filename)
+void ace2adios2(const std::string &filename)
 {
   std::ifstream file(filename);
   if (!file.is_open())
@@ -98,7 +98,7 @@ void adios2readxsdir(const std::string &filename)
   file.close();
 }
 
-void hdf5readxsdir(const std::string &filename)
+void ace2hdf5(const std::string &filename)
 {
   std::ifstream file(filename);
   if (!file.is_open())
