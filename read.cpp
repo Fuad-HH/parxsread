@@ -64,7 +64,7 @@ void ace2adios2(const std::string &filename)
   adios2::IO io = adios.DeclareIO("writeIO");
   adios2::Engine bpWriter = io.Open("ace.bp", adios2::Mode::Write);
 
-  adios2::Group group = io.InquireGroup('/');
+  //adios2::Group group = io.InquireGroup('/');
 
   bpWriter.BeginStep();
 
