@@ -14,10 +14,12 @@ find_package(HighFive REQUIRED)
 # get the source files: only one source file read.cpp
 add_executable(parxsread read.cpp)
 add_executable(readfromadios2 readfromadios2.cpp)
+add_executable(readfromh5 readfromh5.cpp)
 
 # link the libraries: Papillon and HighFive
 target_link_libraries(parxsread PRIVATE PapillonNDL::PapillonNDL HighFive::HighFive adios2::cxx11_mpi MPI::MPI_C)
 target_link_libraries(readfromadios2 PRIVATE PapillonNDL::PapillonNDL adios2::cxx11_mpi MPI::MPI_C)
+target_link_libraries(readfromh5 PRIVATE PapillonNDL::PapillonNDL HighFive::HighFive)
 
 # Find MPI if desired
 if(PARXSREAD_USE_MPI)
