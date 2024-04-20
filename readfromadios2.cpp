@@ -16,7 +16,7 @@
 
 
 std::vector<std::string> splitString(const std::string& str);
-void readAdios2(const std::string &filename, const std::string &xsfilename);
+void readAdios2(const std::string &filename, const std::string &xsfilename, MPI_Comm comm);
 void readlikeabeille(const std::string &dirname);
 
 
@@ -46,11 +46,11 @@ int main(int argc, char* argv[])
   }
 
   const auto start = std::chrono::steady_clock::now();
-  //readAdios2(filename, xsfilename);
-  readlikeabeille(filename);
+  readAdios2(filename, xsfilename, MPI_COMM_WORLD);
+  //readlikeabeille(filename);
+  MPI_Barrier(MPI_COMM_WORLD);
   const auto end = std::chrono::steady_clock::now();
 
-  MPI_Barrier(MPI_COMM_WORLD);
   const std::chrono::duration<double> elapsed_seconds = end - start;
 
   if (rank == 0){
@@ -63,7 +63,7 @@ int main(int argc, char* argv[])
   return 0;
 }
 
-void readAdios2(const std::string &filename, const std::string &xsfilename)
+void readAdios2(const std::string &filename, const std::string &xsfilename, MPI_Comm comm)
 {
   std::ifstream file(filename);
   if (!file.is_open())
@@ -150,7 +150,8 @@ void readlikeabeille(const std::string &dirname)
   }
 
   std::cout << "Rreading ACE library using the list : " << filename << std::endl;
-
+  // a map to store the nuclide name and the ACE object
+  std::unordered_map<std::string, pndl::ACE> aceMap;
 
 
   std::string line;
@@ -173,7 +174,8 @@ void readlikeabeille(const std::string &dirname)
 
     // read the ace file
     std::string acefileloc = dirname + "/" + loc; // root file name + / + loc
-    std::cout << "ACE file at : " << acefileloc << std::endl;
+    //std::cout << "ACE file at : " << acefileloc << std::endl;
+    aceMap.emplace(dirs[1]+"/"+dirs[2], pndl::ACE(acefileloc, pndl::ACE::Type::ASCII));
     pndl::ACE acefile(acefileloc, pndl::ACE::Type::ASCII);
   }
 
